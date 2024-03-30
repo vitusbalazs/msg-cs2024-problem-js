@@ -6,6 +6,7 @@ import { CapitalizationFrequency } from '../domain/capitalization-frequency.enum
 
 export class SavingsManagerService {
   private systemDate = dayjs().toDate();
+
   public passTime(): void {
     const savingAccounts = AccountsRepository.getAll().filter(
       account => account.accountType === AccountType.SAVINGS
@@ -16,6 +17,12 @@ export class SavingsManagerService {
     savingAccounts.forEach(savingAccount => {
       if (savingAccount.interestFrequency === CapitalizationFrequency.MONTHLY) {
         this.addMonthlyInterest(savingAccount, nextSystemDate);
+      } else if (savingAccount.interestFrequency === CapitalizationFrequency.QUARTERLY) {
+        const monthDifference = nextSystemDate.diff(dayjs(savingAccount.lastInterestAppliedDate), 'months');
+        if (monthDifference >= 3) {
+          this.addInterest(savingAccount);
+          savingAccount.lastInterestAppliedDate = nextSystemDate.toDate();
+        }
       }
     });
 
