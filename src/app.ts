@@ -38,17 +38,16 @@ console.log('[Transaction Manager] 5.', TransactionManagerServiceInstance.checkF
 //   )
 // );
 
-// console.log('\n------------------------------------\n');
+console.log('\n------------------------------------\n');
 
-// // SAVINGS MANAGER FUNCTIONALITY
+// SAVINGS MANAGER FUNCTIONALITY
 
-// console.log('[Saving Manager] 1.', TransactionManagerServiceInstance.checkFunds(savingsAccountA.id));
-
-// SavingsManagerServiceInstance.passTime();
-// console.log('[Saving Manager] 2.', TransactionManagerServiceInstance.checkFunds(savingsAccountA.id));
-// SavingsManagerServiceInstance.passTime();
-// console.log('[Saving Manager] 3.', TransactionManagerServiceInstance.checkFunds(savingsAccountA.id));
-// console.log('[Saving Manager] 4.', TransactionManagerServiceInstance.checkFunds(savingsAccountB.id));
-// console.log('[Saving Manager] 5.', TransactionManagerServiceInstance.checkFunds(checkingAccountA.id));
+console.log('[Saving Manager] 1.', TransactionManagerServiceInstance.checkFunds(savingsAccountA.id));
+SavingsManagerServiceInstance.passTime();
+console.log('[Saving Manager] 2.', TransactionManagerServiceInstance.checkFunds(savingsAccountA.id));
+SavingsManagerServiceInstance.passTime();
+console.log('[Saving Manager] 3.', TransactionManagerServiceInstance.checkFunds(savingsAccountA.id));
+console.log('[Saving Manager] 4.', TransactionManagerServiceInstance.checkFunds(savingsAccountB.id));
+console.log('[Saving Manager] 5.', TransactionManagerServiceInstance.checkFunds(checkingAccountA.id));
 
 console.log('\n[SYSTEM]', 'Application closed\n');
