@@ -4,6 +4,7 @@ import { AccountsRepository } from '../repository/accounts.repository';
 import dayjs from 'dayjs';
 import { AccountModel } from '../domain/account.model';
 import { getConversionRate } from '../utils/money.utils';
+import { AccountType } from '../domain/account-type.enum';
 
 export class TransactionManagerService {
   public transfer(fromAccountId: string, toAccountId: string, value: MoneyModel): TransactionModel {
@@ -12,6 +13,10 @@ export class TransactionManagerService {
 
     if (!fromAccount || !toAccount) {
       throw new Error('Specified account does not exist');
+    }
+
+    if (fromAccount.accountType === AccountType.SAVINGS) {
+      throw new Error('Cannot transfer from a savings account');
     }
 
     if (value.currency !== toAccount.balance.currency) {
