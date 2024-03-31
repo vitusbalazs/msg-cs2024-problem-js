@@ -15,7 +15,7 @@ console.log('[SYSTEM]', 'Initialize Application \n');
 seedInitializer();
 console.log('[SYSTEM]', 'Running Application \n\n');
 
-// // TRANSACTION MANAGER FUNCTIONALITY
+// TRANSACTION MANAGER FUNCTIONALITY
 
 console.log('[Transaction Manager] 1.', TransactionManagerServiceInstance.checkFunds(checkingAccountA.id));
 console.log('[Transaction Manager] 2.', TransactionManagerServiceInstance.checkFunds(checkingAccountB.id));
