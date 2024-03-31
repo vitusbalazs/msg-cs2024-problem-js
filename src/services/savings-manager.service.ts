@@ -18,6 +18,8 @@ export class SavingsManagerService {
       if (savingAccount.interestFrequency === CapitalizationFrequency.MONTHLY) {
         this.addMonthlyInterest(savingAccount, nextSystemDate);
       } else if (savingAccount.interestFrequency === CapitalizationFrequency.QUARTERLY) {
+        // Calling the function which will run the necessary checks and add the interest if needed
+        // I'm passing the account and the current interest month
         this.addQuarterlyInterest(savingAccount, nextSystemDate);
       }
     });
@@ -38,11 +40,13 @@ export class SavingsManagerService {
   }
 
   private addQuarterlyInterest(savingAccount: SavingsAccountModel, currentInterestMonth: dayjs.Dayjs): void {
+    // I'm adding 3 months to the last interest applied date to get the next interest date
     const nextInterestDateForAccount = dayjs(savingAccount.lastInterestAppliedDate).add(3, 'months');
 
     const sameMonth = currentInterestMonth.isSame(nextInterestDateForAccount, 'month');
     const sameYear = currentInterestMonth.isSame(nextInterestDateForAccount, 'year');
 
+    // If the current month is the same as the next interest date month and year, I'm adding the interest and setting today as the last interest applied date
     if (sameMonth && sameYear) {
       this.addInterest(savingAccount);
       savingAccount.lastInterestAppliedDate = currentInterestMonth.toDate();
