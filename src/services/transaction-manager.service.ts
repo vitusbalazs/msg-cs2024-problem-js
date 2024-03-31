@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { AccountModel } from '../domain/account.model';
 import { getConversionRate } from '../utils/money.utils';
 import { AccountType } from '../domain/account-type.enum';
+import { CheckingAccountModel } from '../domain/checking-account.model';
 
 export class TransactionManagerService {
   public transfer(fromAccountId: string, toAccountId: string, value: MoneyModel): TransactionModel {
@@ -16,8 +17,20 @@ export class TransactionManagerService {
     }
 
     if (fromAccount.accountType === AccountType.SAVINGS) {
-      throw new Error('Cannot transfer from a savings account');
+      throw new Error("Can't transfer from a savings account");
     }
+
+    if (!(fromAccount as CheckingAccountModel).associatedCard) {
+      throw new Error('No active bankcard is associated with the account');
+    }
+
+    const cardActive = (fromAccount as CheckingAccountModel).associatedCard!.active;
+    const cardExpired = dayjs((fromAccount as CheckingAccountModel).associatedCard!.expirationDate) < dayjs();
+    if (!cardActive || cardExpired) {
+      throw new Error('The associated bankcard is not active or has expired');
+    }
+
+    //check the limits
 
     if (value.currency !== toAccount.balance.currency) {
       value.amount = value.amount * getConversionRate(value.currency, toAccount.balance.currency);
@@ -56,6 +69,20 @@ export class TransactionManagerService {
       throw new Error('Specified account does not exist');
     }
     const account: AccountModel = AccountsRepository.get(accountId)!;
+
+    if (account.accountType === AccountType.CHECKING) {
+      if (!(account as CheckingAccountModel).associatedCard) {
+        throw new Error('No active bankcard is associated with the account');
+      }
+
+      const cardActive = (account as CheckingAccountModel).associatedCard!.active;
+      const cardExpired = dayjs((account as CheckingAccountModel).associatedCard!.expirationDate) < dayjs();
+      if (!cardActive || cardExpired) {
+        throw new Error('The associated bankcard is not active or has expired');
+      }
+
+      //check the limits
+    }
 
     if (account.balance.currency !== amount.currency) {
       amount.amount = amount.amount * getConversionRate(amount.currency, account.balance.currency);
