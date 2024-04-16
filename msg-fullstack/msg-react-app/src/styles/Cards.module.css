@@ -1,0 +1,44 @@
+.card {
+  background-color: #383838 !important;
+  color: rgba(255, 255, 255, 0.98) !important;
+}
+
+.cardSubtitle {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+.cardItem {
+  background-color: #4e4e4e !important;
+  color: rgba(255, 255, 255, 0.98) !important;
+}
+
+.sidebarItem {
+  background-color: #2c2c2c !important;
+  color: rgba(255, 255, 255, 0.98) !important;
+  transition: background-color 0.3s ease;
+}
+
+.sidebarItem:hover {
+  background-color: #414141 !important;
+}
+
+.sidebarItemActive {
+  background-color: #6d6d6d !important;
+  color: rgba(255, 255, 255, 0.98) !important;
+}
+
+.sidebarItemTextColor {
+  color: rgba(255, 255, 255, 0.98) !important;
+}
+
+.cursorPointer {
+  cursor: pointer;
+}
+
+.fullDvh {
+  height: 100dvh;
+}
+
+.fullHeight {
+  height: 100%;
+}
